@@ -666,11 +666,21 @@
   background: var(--lavender-hover);
 }
 
+.match-item.assigned {
+  border-color: var(--primary-purple);
+  background: var(--lavender-hover);
+}
+
 .match-item.matched {
   border-color: var(--green-success);
   background: var(--green-soft);
   color: var(--green-success);
-  cursor: default;
+}
+
+.match-item.wrong {
+  border-color: var(--red-accent);
+  background: var(--red-soft);
+  color: var(--red-accent);
 }
 
 .match-item.shake {
@@ -753,6 +763,84 @@
   gap: 12px;
   margin-top: 14px;
   flex-wrap: wrap;
+}
+
+.activity-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.activity-actions > button {
+  min-height: 42px;
+}
+
+.activity-box,
+.activity-box > *,
+.quiz-question-card,
+.match-col {
+  min-width: 0;
+}
+
+.option-btn,
+.match-item,
+.word-chip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.grammar-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dialogue-image-wrap {
+  width: fit-content;
+  max-width: 100%;
+  margin: 18px auto;
+  border: 2px solid var(--border-color);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.dialogue-image-wrap img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 48vh;
+  object-fit: contain;
+}
+
+.lesson-video {
+  display: block;
+  width: 100%;
+  max-height: 52vh;
+  margin-bottom: 14px;
+  border-radius: 16px;
+  background: #000;
+}
+
+.completion-message,
+.completion-requirements {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.completion-stars {
+  color: #F59E0B;
+  font-size: 1.65rem;
+  letter-spacing: 4px;
+}
+
+.sentence-hint {
+  margin-bottom: 8px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.media-unavailable {
+  display: none !important;
 }
 
 .feedback-banner {
@@ -1079,6 +1167,23 @@
     color: var(--text-muted);
     font-size: 0.78rem;
     font-weight: 800;
+  }
+
+  .activity-actions {
+    width: 100%;
+  }
+
+  .activity-actions > button {
+    flex: 1 1 130px;
+  }
+
+  .quiz-prompt {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .blank-select {
+    max-width: 100%;
   }
 
   .dialogue-row,

@@ -63,12 +63,18 @@
       </div>
     </header>
 
+    <div class="app-notice hidden" id="appNotice" role="status" aria-live="polite"></div>
+
     <main class="lesson-intro-wrapper" id="lessonIntroContainer">
       <!-- Populated dynamically by lessons.js -->
     </main>
   </div>
 
   <script src="../assets/js/lessons.js"></script>
+  <script src="../assets/js/slides.js"></script>
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/progress.js"></script>
+  <script src="../assets/js/integration.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       initThemeToggle();

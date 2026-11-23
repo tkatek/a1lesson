@@ -78,7 +78,7 @@ const SLIDES_BY_LESSON = {
       type: "activity",
       activityType: "matching",
       title: "Match Questions & Answers",
-      instruction: "Click a question on the left, then click its matching answer on the right.",
+      instruction: "Click each question, choose its matching answer, then check all pairs.",
       pairs: [
         { left: "What's your name?", right: "I'm Daniel." },
         { left: "How are you?", right: "I'm good, thanks!" },

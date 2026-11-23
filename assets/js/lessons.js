@@ -6,10 +6,9 @@ const LESSONS_DATA = [
     title: "Greetings & Introductions",
     shortDesc: "Learn how to say hello, ask how someone is, and introduce yourself politely.",
     intro: "Welcome to your first EnGame English lesson! Learn everyday greetings, polite responses, and simple questions to introduce yourself to new friends.",
-    slideCount: 7,
     xpReward: 100,
-    level: "A1 Beginner",
-    duration: "10 mins",
+    level: "A1",
+    estimatedTime: 10,
     objectives: [
       "Use common greetings for morning, afternoon, and evening.",
       "Ask and answer 'How are you?' naturally.",
@@ -24,10 +23,9 @@ const LESSONS_DATA = [
     title: "Family",
     shortDesc: "Discover vocabulary for family members and talk about your relatives.",
     intro: "Family is an essential everyday topic in English. Learn the names of close and extended family members and practice describing your family with clear A1 sentences.",
-    slideCount: 8,
     xpReward: 120,
-    level: "A1 Beginner",
-    duration: "12 mins",
+    level: "A1",
+    estimatedTime: 12,
     objectives: [
       "Identify nine key family members in English.",
       "Describe your family using 'This is my...' and 'I have...'.",
@@ -42,10 +40,9 @@ const LESSONS_DATA = [
     title: "Home & Daily Life",
     shortDesc: "Explore rooms in a house, home objects, and everyday daily routines.",
     intro: "Learn how to talk about where you live and what you do every day. Practice naming rooms, household furniture, daily actions, and basic time expressions.",
-    slideCount: 9,
     xpReward: 140,
-    level: "A1 Beginner",
-    duration: "14 mins",
+    level: "A1",
+    estimatedTime: 14,
     objectives: [
       "Name common rooms and furniture inside a house.",
       "Describe your daily routine from morning to night.",
@@ -60,10 +57,9 @@ const LESSONS_DATA = [
     title: "Clothes",
     shortDesc: "Learn clothing vocabulary, colors, and how to say what people are wearing.",
     intro: "What are you wearing today? In this lesson, you will learn 10 essential clothing words, combine them with colors, and describe outfits.",
-    slideCount: 8,
     xpReward: 120,
-    level: "A1 Beginner",
-    duration: "12 mins",
+    level: "A1",
+    estimatedTime: 12,
     objectives: [
       "Recognize and pronounce 10 everyday clothing items.",
       "Combine colors with clothes (e.g., 'a red T-shirt').",
@@ -78,10 +74,9 @@ const LESSONS_DATA = [
     title: "Basic Grammar",
     shortDesc: "Master subject pronouns, the verb 'to be', positive/negative forms, and 'a / an'.",
     intro: "Build a strong foundation in English grammar. Learn how to connect subject pronouns with 'am, is, are', form negative sentences, and choose between 'a' and 'an'.",
-    slideCount: 9,
     xpReward: 160,
-    level: "A1 Beginner",
-    duration: "15 mins",
+    level: "A1",
+    estimatedTime: 15,
     objectives: [
       "Use all seven subject pronouns (I, You, He, She, It, We, They).",
       "Conjugate the verb 'to be' in positive and negative sentences.",
@@ -159,75 +154,32 @@ function getLessonIllustrationSVG(key) {
   return svgs[key] || svgs.greetings;
 }
 
-const STORAGE_KEY = "a1_english_lessons_progress_v1";
-
-function loadProgressState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : {};
-    return {
-      lessons: parsed.lessons || {},
-      scores: parsed.scores || {},
-      mistakes: parsed.mistakes || {},
-      xp: parsed.xp || 0,
-      theme: parsed.theme || "light"
-    };
-  } catch (e) {
-    return { lessons: {}, scores: {}, mistakes: {}, xp: 0, theme: "light" };
-  }
-}
-
-function saveProgressState(state) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch (e) {
-    // Ignore storage errors
-  }
-}
-
-function calculateGamificationStats(state) {
-  let totalXp = state.xp || 0;
-  let totalStars = 0;
-  let completedCount = 0;
-
-  LESSONS_DATA.forEach((lesson) => {
-    const prog = state.lessons[lesson.id] || {};
-    if (prog.completed) {
-      completedCount++;
-      totalStars += getLessonStars(lesson.id, state);
-    }
-  });
-
-  const level = Math.floor(totalXp / 150) + 1;
-  return { totalXp, totalStars, completedCount, level };
-}
-
-function getLessonStars(lessonId, state) {
-  const prog = state.lessons[lessonId] || {};
-  if (!prog.completed) return 0;
-  const score = state.scores[lessonId];
-  if (!score || !score.total) return 3;
-  const pct = (score.correct / score.total) * 100;
-  if (pct >= 80) return 3;
-  if (pct >= 50) return 2;
-  return 1;
-}
-
 function renderStarsString(stars) {
   const filled = "★".repeat(stars);
   const empty = "☆".repeat(3 - stars);
   return filled + empty;
 }
 
+function showAppNotice(message) {
+  const notice = document.getElementById("appNotice");
+  if (!notice || !message) return;
+  notice.textContent = message;
+  notice.classList.remove("hidden");
+}
+
+document.addEventListener("lesson-progress-notice", (event) => {
+  showAppNotice(event.detail);
+});
+
 function updateHeaderHUD() {
-  const state = loadProgressState();
-  const stats = calculateGamificationStats(state);
+  const stats = LessonProgress.calculateGamificationStats();
   const xpEl = document.getElementById("headerXpText");
   const lvlEl = document.getElementById("headerLevelText");
   if (xpEl) xpEl.textContent = `${stats.totalXp} XP`;
   if (lvlEl) lvlEl.textContent = `Lvl ${stats.level} • A1`;
 }
 function initThemeToggle() {
+  if (typeof window.matchMedia !== "function") return;
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   const applySystemTheme = (isDark) => {
@@ -239,7 +191,11 @@ function initThemeToggle() {
   };
 
   applySystemTheme(mediaQuery.matches);
-  mediaQuery.addEventListener("change", (e) => applySystemTheme(e.matches));
+  if (typeof mediaQuery.addEventListener === "function") {
+    mediaQuery.addEventListener("change", (e) => applySystemTheme(e.matches));
+  } else if (typeof mediaQuery.addListener === "function") {
+    mediaQuery.addListener((e) => applySystemTheme(e.matches));
+  }
 }
 
 function initFullscreenToggle() {
@@ -247,9 +203,21 @@ function initFullscreenToggle() {
   if (!btn) return;
   btn.addEventListener("click", () => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
+      if (typeof document.documentElement.requestFullscreen !== "function") {
+        showAppNotice("Fullscreen is not supported by this browser.");
+        return;
+      }
+      document.documentElement.requestFullscreen().catch(() => {
+        showAppNotice("Fullscreen could not be enabled.");
+      });
     } else {
-      document.exitFullscreen().catch(() => {});
+      if (typeof document.exitFullscreen !== "function") {
+        showAppNotice("Fullscreen could not be closed.");
+        return;
+      }
+      document.exitFullscreen().catch(() => {
+        showAppNotice("Fullscreen could not be closed.");
+      });
     }
   });
 }
@@ -303,16 +271,20 @@ function renderLessonsGrid() {
   const grid = document.getElementById("lessonsGrid");
   if (!grid) return;
 
-  const state = loadProgressState();
-  const stats = calculateGamificationStats(state);
+  const state = LessonProgress.loadProgressState();
+  const stats = LessonProgress.calculateGamificationStats(state);
 
   renderAchievementsStrip(stats);
 
   grid.innerHTML = LESSONS_DATA.map((lesson) => {
-    const lessonProg = state.lessons[lesson.id] || {};
-    const isDone = Boolean(lessonProg.completed);
+    const lessonProg = state.lessons[lesson.slug] || {};
+    const metadata = LessonProgress.getLessonMetadata(lesson.id);
+    const isDone = LessonProgress.isLessonCompleted(lesson.id, state);
     const currentSlide = lessonProg.currentSlide || 0;
-    const stars = getLessonStars(lesson.id, state);
+    const stars = LessonProgress.calculateStars(
+      LessonProgress.calculateLessonScore(lesson.id, state),
+      isDone
+    );
 
     let statusBadge = `<span class="lesson-status-tag status-new">Ready</span>`;
     let btnLabel = "Start Lesson";
@@ -320,8 +292,8 @@ function renderLessonsGrid() {
     if (isDone) {
       statusBadge = `<span class="lesson-status-tag status-completed">Completed ✓</span>`;
       btnLabel = "Replay Lesson";
-    } else if (currentSlide > 0) {
-      statusBadge = `<span class="lesson-status-tag status-inprogress">Slide ${currentSlide + 1} / ${lesson.slideCount}</span>`;
+    } else if (lessonProg.startedAt) {
+      statusBadge = `<span class="lesson-status-tag status-inprogress">Slide ${currentSlide + 1} / ${metadata.total_slides}</span>`;
       btnLabel = "Continue Lesson";
     }
 
@@ -341,8 +313,8 @@ function renderLessonsGrid() {
         </div>
         <div>
           <div class="lesson-card-meta">
-            <span class="slides-pill">📑 ${lesson.slideCount} Slides</span>
-            <span>⏱ ${lesson.duration}</span>
+            <span class="slides-pill">📑 ${metadata.total_slides} Slides</span>
+            <span>⏱ ${lesson.estimatedTime} mins</span>
           </div>
           <a href="pages/lesson.html?lesson=${lesson.id}" class="btn-primary">
             <span>${btnLabel}</span>
@@ -372,19 +344,39 @@ function renderLessonIntroduction() {
   if (!container) return;
 
   const params = new URLSearchParams(window.location.search);
-  const lessonId = parseInt(params.get("lesson"), 10) || 1;
-  const lesson = LESSONS_DATA.find((l) => l.id === lessonId) || LESSONS_DATA[0];
-  const state = loadProgressState();
-  const saved = state.lessons[lesson.id] || {};
-  const stars = getLessonStars(lesson.id, state);
+  const lessonParam = params.get("lesson");
+  const lesson = LESSONS_DATA.find((item) =>
+    String(item.id) === lessonParam || item.slug === lessonParam
+  );
+  if (!lesson || !LessonProgress.validateLesson(lesson.id).valid) {
+    container.innerHTML = `
+      <section class="lesson-intro-card lesson-error-card" role="status">
+        <div class="lesson-intro-content">
+          <h2>Lesson unavailable</h2>
+          <p class="lesson-intro-desc">This lesson link is missing or invalid. Choose an available lesson to continue.</p>
+          <a href="../index.html" class="btn-primary">Back to Lessons</a>
+        </div>
+      </section>
+    `;
+    return;
+  }
+
+  const state = LessonProgress.loadProgressState();
+  const saved = state.lessons[lesson.slug] || {};
+  const metadata = LessonProgress.getLessonMetadata(lesson.id);
+  const completed = LessonProgress.isLessonCompleted(lesson.id, state);
+  const stars = LessonProgress.calculateStars(
+    LessonProgress.calculateLessonScore(lesson.id, state),
+    completed
+  );
 
   const objectivesHTML = lesson.objectives
     .map((obj) => `<li><span class="check-dot">✓</span><span>${obj}</span></li>`)
     .join("");
 
-  const startText = saved.currentSlide > 0 && !saved.completed
+  const startText = saved.startedAt && !completed
     ? `Continue Learning (Slide ${saved.currentSlide + 1})`
-    : "Start Learning";
+    : completed ? "Replay Lesson" : "Start Learning";
 
   container.innerHTML = `
     <div class="lesson-intro-card">
@@ -419,8 +411,8 @@ function renderLessonIntroduction() {
       <div class="lesson-intro-visual">
         ${getLessonCardPhoto(lesson, true)}
         <div class="visual-meta-pills">
-          <span class="visual-pill">📑 ${lesson.slideCount} Slides</span>
-          <span class="visual-pill">⏱ ${lesson.duration}</span>
+          <span class="visual-pill">📑 ${metadata.total_slides} Slides</span>
+          <span class="visual-pill">⏱ ${lesson.estimatedTime} mins</span>
         </div>
       </div>
     </div>

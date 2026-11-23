@@ -46,10 +46,12 @@
             <span id="overallProgressText">0 / 5 Done</span>
           </div>
         </div>
-     
-      
+
+
       </div>
     </header>
+
+      <div class="app-notice hidden" id="appNotice" role="status" aria-live="polite"></div>
 
     <main class="lessons-container">
       <section class="intro-banner">
@@ -86,6 +88,10 @@
   </div>
 
   <script src="assets/js/lessons.js"></script>
+  <script src="assets/js/slides.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/progress.js"></script>
+  <script src="assets/js/integration.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       initThemeToggle();
