@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson Overview | EnGame A1 English</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/lessons.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <a href="../index.html" class="back-link" aria-label="Back to Lessons">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          <span>Lessons</span>
+        </a>
+        <div class="divider-v"></div>
+        <div class="brand-logo engame-logo small" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="5" width="20" height="14" rx="7" fill="#B8FF4A"/>
+            <path d="M7.5 10v4M5.5 12h4" stroke="#126E62" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="15.5" cy="11" r="1.3" fill="#126E62"/>
+            <circle cx="18" cy="13" r="1.3" fill="#19A991"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-row">
+            <span class="engame-tag">EnGame</span>
+            <h1 class="brand-title">A1 English Lessons</h1>
+          </div>
+          <p class="brand-subtitle">Learn • Practice • Level Up</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="gamify-hud">
+          <div class="hud-pill xp-pill">
+            <span class="hud-icon">⚡</span>
+            <span id="headerXpText">0 XP</span>
+          </div>
+          <div class="hud-pill level-pill">
+            <span class="hud-icon">🏅</span>
+            <span id="headerLevelText">Lvl 1 • A1</span>
+          </div>
+        </div>
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" id="fullscreenBtn" aria-label="Toggle Fullscreen" title="Toggle Fullscreen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="lesson-intro-wrapper" id="lessonIntroContainer">
+      <!-- Populated dynamically by lessons.js -->
+    </main>
+  </div>
+
+  <script src="../assets/js/lessons.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initThemeToggle();
+      initFullscreenToggle();
+      updateHeaderHUD();
+      renderLessonIntroduction();
+    });
+  </script>
+</body>
+</html>

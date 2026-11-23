@@ -1,0 +1,402 @@
+:root {
+  --primary-purple: #19A991;
+  --primary-purple-hover: #128C78;
+  --deep-purple: #126E62;
+  --lavender-bg: #E8F7F4;
+  --lavender-hover: #D6F1EC;
+  --lime-green: #B8FF4A;
+  --lime-green-hover: #A6F52E;
+  --soft-green: #DFFF9A;
+  --main-bg: #FAFDFC;
+  --bg-surface: #FFFFFF;
+  --text-main: #201A2B;
+  --text-muted: #5B6E69;
+  --border-color: #CDEAE4;
+  --red-accent: #FF4D6D;
+  --red-soft: #FFE4EA;
+  --green-success: #16A34A;
+  --green-soft: #DCFCE7;
+
+  --shadow-sm: 0 3px 10px rgba(18, 110, 98, 0.06);
+  --shadow-md: 0 10px 26px rgba(18, 110, 98, 0.10);
+  --shadow-lg: 0 18px 40px rgba(18, 110, 98, 0.15);
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --transition: 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+[data-theme="dark"] {
+  --primary-purple: #49BFAE;
+  --primary-purple-hover: #68D0C0;
+  --deep-purple: #E8F6F3;
+  --lavender-bg: #18342F;
+  --lavender-hover: #244841;
+  --lime-green: #B8FF4A;
+  --lime-green-hover: #C8FF70;
+  --soft-green: rgba(184, 255, 74, 0.18);
+  --main-bg: #0D1917;
+  --bg-surface: #14221F;
+  --text-main: #F4FAF8;
+  --text-muted: #A6C8C0;
+  --border-color: #31534C;
+  --red-accent: #FF6B86;
+  --red-soft: rgba(255, 77, 109, 0.2);
+  --green-success: #4ADE80;
+  --green-soft: rgba(74, 222, 128, 0.18);
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.32);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-width: 0;
+  width: 100%;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+body {
+  font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--main-bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+h1, h2, h3, h4, .brand-title, .btn-primary, .btn-secondary {
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Top Bar */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  background: var(--bg-surface);
+  border-bottom: 2px solid var(--border-color);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.brand-logo.engame-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #126E62 0%, #137265 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 6px 16px rgba(25, 169, 145, 0.35);
+}
+
+.brand-logo.engame-logo::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--lime-green);
+  border: 2px solid var(--bg-surface);
+}
+
+.brand-logo.small {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.engame-tag {
+  background: linear-gradient(135deg, #137265, #126E62);
+  color: #B8FF4A;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brand-title {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--deep-purple);
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.brand-subtitle {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Gamification HUD Pills */
+.gamify-hud {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  border: 1.5px solid var(--border-color);
+  transition: transform var(--transition);
+}
+
+.xp-pill {
+  background: var(--soft-green);
+  color: #201A2B;
+  border-color: #B8FF4A;
+}
+
+[data-theme="dark"] .xp-pill {
+  color: #B8FF4A;
+}
+
+.level-pill {
+  background: var(--lavender-bg);
+  color: var(--deep-purple);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  background: var(--lavender-bg);
+  color: var(--deep-purple);
+  border: 1.5px solid var(--border-color);
+  transition: all var(--transition);
+}
+
+.icon-btn:hover {
+  background: var(--lavender-hover);
+  transform: translateY(-2px);
+}
+
+.badge-lime {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: var(--lime-green);
+  color: #201A2B;
+  box-shadow: 0 3px 10px rgba(184, 255, 74, 0.35);
+}
+
+.badge-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  background: var(--lavender-bg);
+  color: var(--deep-purple);
+  border: 1px solid var(--border-color);
+}
+
+/* EnGame Lime Green Action Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 14px;
+  background: var(--lime-green);
+  color: #201A2B;
+  font-weight: 800;
+  font-size: 0.94rem;
+  border: 2px solid #9EE82C;
+  box-shadow: 0 5px 0 #84C91C, 0 8px 18px rgba(25, 169, 145, 0.16);
+  transition: all 0.16s ease;
+}
+
+.btn-primary:hover {
+  background: var(--lime-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #84C91C, 0 12px 22px rgba(25, 169, 145, 0.22);
+}
+
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #84C91C;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 14px;
+  background: var(--lavender-bg);
+  color: var(--deep-purple);
+  border: 1.5px solid var(--border-color);
+  font-weight: 700;
+  font-size: 0.93rem;
+  transition: all var(--transition);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--lavender-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  .top-bar {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+  .brand {
+    flex: 1 1 100%;
+  }
+  .top-actions .overall-pill {
+    display: none;
+  }
+  .brand-title {
+    font-size: 0.98rem;
+  }
+  .top-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .gamify-hud {
+    min-width: 0;
+    gap: 6px;
+  }
+  .hud-pill {
+    gap: 4px;
+    padding: 5px 8px;
+    font-size: 0.74rem;
+  }
+  .top-actions .icon-btn {
+    padding: 7px 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .top-bar {
+    padding: 10px 12px;
+  }
+  .brand {
+    gap: 10px;
+  }
+  .brand-row {
+    flex-wrap: wrap;
+    gap: 4px 6px;
+  }
+  .brand-logo.engame-logo {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+  }
+  .brand-title {
+    font-size: 0.9rem;
+  }
+  .brand-subtitle {
+    font-size: 0.68rem;
+  }
+  .hud-pill {
+    padding: 5px 6px;
+    font-size: 0.7rem;
+  }
+  .top-actions .icon-btn {
+    padding: 6px;
+  }
+}
+/* Hide all XP pills and XP counters across the whole project */
+.xp-pill,
+.lime-chip,
+.xp-reward-pill,
+.visual-pill.lime {
+  display: none !important;
+}
+#themeToggle {
+  display: none !important;
+}
